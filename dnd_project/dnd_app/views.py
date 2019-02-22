@@ -5,21 +5,21 @@ from rest_framework import viewsets
 from .models import Weapon
 from .models import User
 from .models import Character
-# from .serializers import *
+from .serializer import *
 # Create your views here.
 
 def helloIndex(req):
     return HttpResponse("ello!")  
 
-# class UserView(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
+class UserView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-# class CharacterView(viewsets.ModelViewSet):
-#     queryset = Character.objects.all()
-#     serializer_class = CharacterSerializer
+class CharacterView(viewsets.ModelViewSet):
+    queryset = Character.objects.all()
+    serializer_class = CharacterSerializer
 
-# class WeaponView(viewsets.ModelViewSet):
-#     queryset = Weapon.objects.all()
-#     serializer_class = WeaponSerializer
+class WeaponView(viewsets.ModelViewSet):
+    queryset = Weapon.objects.all()
+    serializer_class = WeaponSerializer
 
