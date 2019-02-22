@@ -3,6 +3,7 @@ import './App.css';
 import axios from "axios";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import User from './components/User';
+import SingleUser from './components/SingleUser';
 
 class App extends Component {
 state ={
@@ -37,12 +38,12 @@ componentDidMount(){
         <div>
           <div>
             <button onClick={this.onCheck}> Check users</button>
-          
+          {/* <SingleUser/> */}
           </div >
           <Switch>
 
             <Route exact path='/' render={userComponent} />
-            {/* <Route exact path='/user/<:userId>' component={User} /> */}
+            <Route exact path='/user/:userId' component={SingleUser} />
           </Switch>
 
         </div>

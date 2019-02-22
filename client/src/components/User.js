@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class User extends Component {
 
@@ -7,19 +7,19 @@ class User extends Component {
         return (
             <div>
 
-<p>Hey im user </p>
-{this.props.users.map((user, i) => (
+                <p>Hey im user </p>
+                {this.props.users.map((user, i) => (
 
-<div key={i}>
-    <div>
-        <div>{user.name}</div>
-        {/* <Link to={`/all/${user._id}`}> */}
-        {/* <div>{user.name}</div> */}
-        {/* </Link> */}
-    </div>
-</div>
+                    <div key={i}>
+                        <div>
+                            <div>{user.name}</div>
+                            <Link to={`user/${user.userId}`}>
+                                <div>{user.name}</div>
+                            </Link>
+                        </div>
+                    </div>
 
-))}
+                ))}
             </div>
         );
     }
