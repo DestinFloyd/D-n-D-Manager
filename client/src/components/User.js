@@ -7,13 +7,11 @@ class User extends Component {
         return (
             <div>
 
-                <p>Hey im user </p>
                 {this.props.users.map((user, i) => (
 
                     <div key={i}>
-                        <div>
-                            <div>{user.name}</div>
-                            <Link to={`user/${user.userId}`}>
+                        <div>  
+                            <Link to={`/player/${user.userId}`}>
                                 <div>{user.name}</div>
                             </Link>
                         </div>
