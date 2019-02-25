@@ -24,11 +24,6 @@ class App extends Component {
       console.log(res.data)
     })
   }
-  // makeIt =(responseData )=>{
-  //   let x = this.state;
-  //   x = responseData
-  //   this.setState({responseStuff: x})
-  // }
 
   render() {
     const userComponent = () => { return <User users={this.state.responseStuff} /> }
@@ -46,8 +41,8 @@ class App extends Component {
 
             <Route exact path='/' render={userComponent} />
             
-            <Route exact path='/player/:userId' component={SingleUser} />
-            <Route exact path='/my/:userId/character/:characterId' component={Character}/>
+            <Route exact path='/player/:userId/' component={SingleUser} />
+            <Route exact path='/my/:userId/character/:characterId/' component={Character}/>
           </Switch>
 
         </div>

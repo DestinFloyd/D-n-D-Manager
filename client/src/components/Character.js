@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import NewWeaponForm from './NewWeaponForm'
+import Weapon from './Weapon'
 
 class Character extends Component {
 
@@ -20,13 +22,13 @@ class Character extends Component {
                 hitPoints: '',
                 ac: '',
                 weapons: []
-            }
+            },
+            showAddWeapon: false
         }
     componentDidMount() {
         this.getSingleCharacter()
 
     }
-
     getSingleCharacter = () => {
         const CharacterId = this.props.match.params.characterId
         axios.get(`/api/p4/characters/${CharacterId}`)
@@ -34,7 +36,10 @@ class Character extends Component {
                 console.log(res.data)
                 this.setState({ info: res.data })
             })
-
+    }
+    toggleForm = () => {
+        this.getSingleCharacter()
+        this.setState({ showAddWeapon: !this.state.showAddWeapon })
     }
     render() {
         return (
@@ -52,12 +57,21 @@ class Character extends Component {
                 <p>CHA {this.state.info.charisma}</p>
                 <p>HP {this.state.info.hitPoints}</p>
                 <p>AC {this.state.info.ac}</p>
+                
+                <button onClick={this.toggleForm}>Add</button> 
+                {this.state.showAddWeapon ? <NewWeaponForm toggleForm={this.toggleForm} characterId={this.state.info.characterId} /> : null}              
                 {this.state.info.weapons.map((weapon, i) =>
-                    (<div key={i}>Weapon: {weapon.name}
-                        Damage: {weapon.damage}
-                        Damage Details: {weapon.damageDetails}
-                        Special Affects:{weapon.specialAffects}
 
+                    (<div key={i}>  
+                        <Weapon 
+                        getSingleCharacter={this.getSingleCharacter}
+                        weaponId={weapon.weaponId}
+                        weapon={weapon.name}
+                        damage={weapon.damage}
+                        damageDetails={weapon.damageDetails}
+                        specialAffects={weapon.specialAffects}
+                        />
+                       
                     </div>)
                 )}
             </div>
