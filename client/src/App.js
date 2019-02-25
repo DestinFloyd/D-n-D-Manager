@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import User from './components/User';
 import SingleUser from './components/SingleUser';
 import Character from './components/Character'
+
 class App extends Component {
   state = {
     responseStuff: [{
@@ -18,6 +19,7 @@ class App extends Component {
   componentDidMount() {
     this.onCheck()
   }
+
   onCheck = () => {
     axios.get("api/p4/users/").then(res => {
       this.setState({ responseStuff: res.data });
@@ -25,24 +27,27 @@ class App extends Component {
     })
   }
 
+
+
+
   render() {
-    const userComponent = () => { return <User users={this.state.responseStuff} /> }
-    // const OneSingleUser = () => { return <SingleUser users={this.state.responseStuff} /> }
+    const userComponent = () => { return <User users={this.state.responseStuff} getAll={this.onCheck} /> }
+    // const singleUserComponet = () => { return <SingleUser getAll={this.onCheck} /> }
     return (
 
 
       <Router>
         <div>
           <div>
-           <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
+            <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
 
           </div >
           <Switch>
 
             <Route exact path='/' render={userComponent} />
-            
+            {/* <Route exact path='/player/:userId/' render={singleUserComponet} /> */}
             <Route exact path='/player/:userId/' component={SingleUser} />
-            <Route exact path='/my/:userId/character/:characterId/' component={Character}/>
+            <Route exact path='/my/:userId/character/:characterId/' component={Character} />
           </Switch>
 
         </div>

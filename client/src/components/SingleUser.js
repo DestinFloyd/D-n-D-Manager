@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import NewCharacterForm from './NewCharacterForm'
 
 class SingleUser extends Component {
 
@@ -11,9 +12,9 @@ class SingleUser extends Component {
             characters: [{
                 name: '',
 
-            }]
-
-
+            }],
+            wantToDelete: false,
+            newCharacterForm: false
         }
     }
 
@@ -21,6 +22,7 @@ class SingleUser extends Component {
         this.getSingleUser()
 
     }
+
     getSingleUser = () => {
         const userId = this.props.match.params.userId
         axios.get(`/api/p4/users/${userId}`)
@@ -30,18 +32,31 @@ class SingleUser extends Component {
             })
 
     }
-
+    toggleDelete = () => {
+        this.setState({ wantToDelete: !this.state.wantToDelete })
+    }
+    deleteUser = () => {
+        axios.delete(`/api/p4/users/${this.props.match.params.userId}`)
+        .then(() => this.props.history.goBack())
+         
+    }
+    toggleNewCharacter=()=>{
+        this.setState({ newCharacterForm: !this.state.newCharacterForm })
+    }
 
     render() {
         return (
             <div>
-
+                <button onClick={this.toggleDelete}>Delete this user</button>
+                {this.state.wantToDelete ? <button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
+                <button onClick={this.toggleNewCharacter}>New Character</button>
+                {this.state.newCharacterForm ? <NewCharacterForm/> : null}
                 <p>  Im a single users :)  </p>
                 {this.state.info.characters.map((char, i) => (
 
                     <div key={i}>
                         <div>
-                             <Link to={`/my/${this.props.match.params.userId}/character/${char.characterId}`}> 
+                            <Link to={`/my/${this.props.match.params.userId}/character/${char.characterId}`}>
                                 <div>{char.name}</div>
                             </Link>
                         </div>
