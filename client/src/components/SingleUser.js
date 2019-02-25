@@ -37,20 +37,23 @@ class SingleUser extends Component {
     }
     deleteUser = () => {
         axios.delete(`/api/p4/users/${this.props.match.params.userId}`)
-        .then(() => this.props.history.goBack())
+        .then(()=>{this.props.history.goBack()})
+        // window.location
          
     }
     toggleNewCharacter=()=>{
         this.setState({ newCharacterForm: !this.state.newCharacterForm })
     }
 
+
     render() {
         return (
             <div>
                 <button onClick={this.toggleDelete}>Delete this user</button>
                 {this.state.wantToDelete ? <button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
+               
                 <button onClick={this.toggleNewCharacter}>New Character</button>
-                {this.state.newCharacterForm ? <NewCharacterForm/> : null}
+                {this.state.newCharacterForm ? <NewCharacterForm /> : null}
                 <p>  Im a single users :)  </p>
                 {this.state.info.characters.map((char, i) => (
 
