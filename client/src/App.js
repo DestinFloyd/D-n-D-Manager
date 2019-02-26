@@ -45,7 +45,7 @@ class App extends Component {
           </div >
           <Switch>
 
-            <Route exact path='/' render={userComponent} />
+            <Route exact path='/' render={userComponent}/>
 
             {/* <Route exact path='/player/:userId/' render={()=> <SingleUser getAll={this.onCheck}/> } />   */}
                 <Route exact path='/player/:userId' render={singleUserComponet} />

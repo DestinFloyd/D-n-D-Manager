@@ -37,7 +37,6 @@ class NewCharacterForm extends Component {
     handleSubmit=(event)=>{
         event.preventDefault()
         const newInfo = this.state.info
-       
         axios.post(`/api/p4/characters/`, newInfo)
         .then((res) => {
             this.props.toggleNewCharacter()
