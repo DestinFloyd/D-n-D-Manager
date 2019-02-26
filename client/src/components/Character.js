@@ -23,7 +23,8 @@ class Character extends Component {
                 ac: '',
                 weapons: []
             },
-            showAddWeapon: false
+            showAddWeapon: false,
+            wantToDelete: false
         }
     componentDidMount() {
         this.getSingleCharacter()
@@ -41,11 +42,25 @@ class Character extends Component {
         this.getSingleCharacter()
         this.setState({ showAddWeapon: !this.state.showAddWeapon })
     }
+    toggleForm = () => {
+        this.getSingleCharacter()
+        this.setState({ showAddWeapon: !this.state.showAddWeapon })
+    }
+    toggleDelete = () => {
+        this.setState({ wantToDelete: !this.state.wantToDelete })
+    }
+    deleteCharacter = () => {
+        axios.delete(`/api/p4/characters/${this.props.match.params.characterId}`)
+        .then(()=>{this.props.history.goBack()})
+        // .then(()=>{this.props.getAll()})
+    
+    }
     render() {
         return (
             <div>
                 <p>Im a single character </p>
-
+                <button onClick={this.toggleDelete}>Delete this Character</button>
+                {this.state.wantToDelete ?<button onClick={this.deleteCharacter}>DELETE THIS CHARACTER?</button> : null}
                 <p>Name:{this.state.info.name}</p>
                 <p>Race: {this.state.info.race}</p>
                 <p>Class: {this.state.info.characterClass}</p>

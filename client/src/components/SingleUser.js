@@ -52,7 +52,6 @@ class SingleUser extends Component {
             <div>
                 <button onClick={this.toggleDelete}>Delete this user</button>
                 {this.state.wantToDelete ?<button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
-                {/* <Link to={`/`}><button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button></Link> */}
                 <button onClick={this.toggleNewCharacter}>New Character</button>
                 {this.state.newCharacterForm ? <NewCharacterForm toggleNewCharacter={this.toggleNewCharacter} userId={this.props.userId} getSingleUser={this.getSingleUser}/> : null}
                 <p>  Im a single users :)  </p>
