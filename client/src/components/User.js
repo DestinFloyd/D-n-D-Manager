@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import NewUserForm from './NewUserForm'
+// import SingleUser from './SingleUser';
 
 class User extends Component {
     state = {
@@ -20,8 +21,9 @@ class User extends Component {
 
                     <div key={i}>
                         <div>
-                            <Link to={`/player/${user.userId}`}>
-                                <div>{user.name}</div>
+                            <Link to={`/player/${user.userId}`} >
+                           
+                                <div key={i} >{user.name} </div>
                             </Link>
                         </div>
                     </div>

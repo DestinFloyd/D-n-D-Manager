@@ -11,7 +11,6 @@ class SingleUser extends Component {
             name: '',
             characters: [{
                 name: '',
-
             }],
             wantToDelete: false,
             newCharacterForm: false
@@ -20,11 +19,10 @@ class SingleUser extends Component {
 
     componentDidMount() {
         this.getSingleUser()
-
     }
 
     getSingleUser = () => {
-        const userId = this.props.match.params.userId
+        const userId = this.props.userId
         axios.get(`/api/p4/users/${userId}`)
             .then((res) => {
                 console.log(res.data)
@@ -36,9 +34,12 @@ class SingleUser extends Component {
         this.setState({ wantToDelete: !this.state.wantToDelete })
     }
     deleteUser = () => {
-        axios.delete(`/api/p4/users/${this.props.match.params.userId}`)
-        .then(()=>{this.props.history.goBack()})
-        // window.location
+        axios.delete(`/api/p4/users/${this.props.userId}`)
+        .then(()=>{this.props.home()}).then(()=>{this.props.getAll()})
+        // .then(() => {
+        //     this.props.history.push('/')
+        //   });
+      
          
     }
     toggleNewCharacter=()=>{
@@ -50,16 +51,18 @@ class SingleUser extends Component {
         return (
             <div>
                 <button onClick={this.toggleDelete}>Delete this user</button>
-                {this.state.wantToDelete ? <button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
-               
+                {this.state.wantToDelete ?<button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
+                {/* <Link to={`/`}><button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button></Link> */}
                 <button onClick={this.toggleNewCharacter}>New Character</button>
-                {this.state.newCharacterForm ? <NewCharacterForm /> : null}
+                {this.state.newCharacterForm ? <NewCharacterForm toggleNewCharacter={this.toggleNewCharacter} userId={this.props.userId} getSingleUser={this.getSingleUser}/> : null}
                 <p>  Im a single users :)  </p>
+                
                 {this.state.info.characters.map((char, i) => (
 
                     <div key={i}>
                         <div>
-                            <Link to={`/my/${this.props.match.params.userId}/character/${char.characterId}`}>
+                           
+                            <Link to={`/my/${this.props.userId}/character/${char.characterId}`}>
                                 <div>{char.name}</div>
                             </Link>
                         </div>

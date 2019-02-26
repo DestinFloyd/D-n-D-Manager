@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   onCheck = () => {
-    axios.get("api/p4/users/").then(res => {
+    axios.get("/api/p4/users/").then(res => {
       this.setState({ responseStuff: res.data });
       console.log(res.data)
     })
@@ -32,7 +32,8 @@ class App extends Component {
 
   render() {
     const userComponent = () => { return <User users={this.state.responseStuff} getAll={this.onCheck} /> }
-    // const singleUserComponet = () => { return <SingleUser getAll={this.onCheck} /> }
+    const singleUserComponet = ({match , history}) => { return <SingleUser getAll={this.onCheck} userId={match.params.userId} home={history.goBack}/> }
+    
     return (
 
 
@@ -45,9 +46,11 @@ class App extends Component {
           <Switch>
 
             <Route exact path='/' render={userComponent} />
-            {/* <Route exact path='/player/:userId/' render={()=> <SingleUser getAll={this.onCheck}/> } /> */}
 
-            <Route exact path='/player/:userId/' component={SingleUser} />
+            {/* <Route exact path='/player/:userId/' render={()=> <SingleUser getAll={this.onCheck}/> } />   */}
+                <Route exact path='/player/:userId' render={singleUserComponet} />
+            {/* <Route exact path='/player/:userId/' component={SingleUser} /> */}
+
             <Route exact path='/my/:userId/character/:characterId/' component={Character} />
           </Switch>
 
