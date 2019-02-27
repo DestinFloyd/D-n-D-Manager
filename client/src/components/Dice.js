@@ -7,36 +7,82 @@ import D8 from './D8';
 import D6 from './D6';
 import D4 from './D4';
 
+
 class Dice extends Component {
     state = {
-
-        twelve: <D12 />,
-        set: []
-
+        set: [],
+        dice: []
     }
     addToSet = (die) => {
         let bag = this.state.set
-        console.log(typeof bag)
-        console.log(bag)
         bag.push(die)
-       
         this.setState({ set: bag })
     }
-  
+
+    eraseSet = () => {
+        const empty = ['']
+        let itNow = { ...this.state.dice }
+        itNow = empty
+        this.setState({ dice: itNow })
+
+    }
+    loopNGo = () => {
+
+
+        let bag = this.state.dice
+        let set = this.state.set
+        set.map((one) => {
+            if (one === 20) {
+                bag.push(<D20 />)
+            } else if (one === 12) {
+                bag.push(<D12 />)
+            } else if (one === "00") {
+                bag.push(<D00 />)
+            } else if (one === 10) {
+                bag.push(<D10 />)
+            } else if (one === 8) {
+                bag.push(<D8 />)
+            } else if (one === 6) {
+                bag.push(<D6 />)
+            } else if (one === 4) {
+                bag.push(<D4 />)
+            }
+
+            this.setState({ dice: bag })
+
+            return "done"
+
+        })
+    }
+
     render() {
+
         return (
             <div>
                 Im the dice Component
-                <button onClick={() => { this.addToSet(<D20 />) }}>Add 20</button>
-                <button onClick={() => { this.addToSet(<D00 />) }}>Add 00</button>
-                <button onClick={() => { this.addToSet(<D12 />) }}>Add 12</button>
-                <button onClick={() => { this.addToSet(<D10 />) }}>Add 10</button>
-                <button onClick={() => { this.addToSet(<D8 />) }}>Add 8</button>   
-                <button onClick={() => { this.addToSet(<D6 />) }}>Add 6</button>
-                <button onClick={() => { this.addToSet(<D4 />) }}>Add 4</button>   
-                
+                <button onClick={() => { this.addToSet(20) }} > Add 20</button>
+                <button onClick={() => { this.addToSet("00") }}>Add 00</button>
+                <button onClick={() => { this.addToSet(12) }}>Add 12</button>
+                <button onClick={() => { this.addToSet(10) }}>Add 10</button>
+                <button onClick={() => { this.addToSet(8) }}>Add 8</button>
+                <button onClick={() => { this.addToSet(6) }}>Add 6</button>
+                <button onClick={() => { this.addToSet(4) }}>Add 4</button>
+                <button onClick={this.loopNGo}> ReRoll </button>
+                <button onClick={this.eraseSet}> Erase</button>
+                <br/>
+Your bag has: 
                 {this.state.set.map((die, i) => (
 
+                    <div key={i}>
+                        <div>
+                           
+        {die}
+                        </div>
+                    </div>
+
+                ))}
+
+                {this.state.dice.map((die, i) => (
                     <div key={i}>
                         <div>
                             {die}
@@ -46,13 +92,6 @@ class Dice extends Component {
                 ))}
 
 
-             
-                <D12 />
-                <D10 />
-                <D00 />
-                <D8 />
-                <D6 />
-                <D4 />
             </div>
         );
     }

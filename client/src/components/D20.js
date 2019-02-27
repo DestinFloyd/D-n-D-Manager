@@ -8,6 +8,7 @@ class D20 extends Component {
     componentDidMount() {
         this.rollIt()
     }
+
     rollIt = () => {
         const roll = Math.floor(Math.random() * 20) + 1
         let swapping = this.state.result
@@ -18,6 +19,7 @@ class D20 extends Component {
     render() {
         return (
             <div>
+                
                 {this.state.result}
             </div>
         );
