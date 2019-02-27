@@ -36,9 +36,7 @@ class SingleUser extends Component {
     deleteUser = () => {
         axios.delete(`/api/p4/users/${this.props.userId}`)
         .then(()=>{this.props.home()}).then(()=>{this.props.getAll()})
-        // .then(() => {
-        //     this.props.history.push('/')
-        //   });
+
       
          
     }

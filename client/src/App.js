@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import User from './components/User';
 import SingleUser from './components/SingleUser';
 import Character from './components/Character'
+import Dice from './components/Dice';
 
 class App extends Component {
   state = {
@@ -41,7 +42,7 @@ class App extends Component {
         <div>
           <div>
             <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
-
+<Dice/>
           </div >
           <Switch>
 
