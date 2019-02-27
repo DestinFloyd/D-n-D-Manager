@@ -14,7 +14,8 @@ class App extends Component {
       name: '',
       style: '',
       characters: [{}]
-    }]
+    }], 
+    spellsReturn: [{}]
 
   }
   componentDidMount() {
@@ -24,13 +25,15 @@ class App extends Component {
   onCheck = () => {
     axios.get("/api/p4/users/").then(res => {
       this.setState({ responseStuff: res.data });
-      console.log(res.data)
+      
     })
   }
 
   findSpell = () => {
-    axios.get('http://www.dnd5eapi.co/api/spells/1')
-      .then((res) => { console.log(res.data) })
+    axios.get('http://www.dnd5eapi.co/api/spells/')
+    // .then((res) => { console.log(res.data) })
+      .then((res)=>{ this.setState({ spellsReturn : res.data} )  })
+   
   }
 
 
