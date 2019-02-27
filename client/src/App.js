@@ -15,7 +15,7 @@ class App extends Component {
       style: '',
       characters: [{}]
     }], 
-    spellsReturn: {results:[]}
+    
 
   }
   componentDidMount() {
@@ -29,12 +29,7 @@ class App extends Component {
     })
   }
 
-  findSpell = () => {
-    axios.get('http://www.dnd5eapi.co/api/spells/')
-    // .then((res) => { console.log(res.data) })
-      .then((res)=>{ this.setState({ spellsReturn : res.data} )  })
-   
-  }
+
 
 
   render() {
@@ -48,15 +43,7 @@ class App extends Component {
         <div>
           <div>
             <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
-            <div> 
-              <button onClick={this.findSpell}> Get spells</button>
-            
-            {this.state.spellsReturn.results.map((spell, i)=>(
-              <div key={i}>
-                {spell.name}
-              </div>
-            ))}
-            </div>
+        
             <Dice />
           </div >
           <Switch>

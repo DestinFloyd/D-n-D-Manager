@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import NewWeaponForm from './NewWeaponForm'
 import Weapon from './Weapon'
+import Spell from './Spell';
 
 class Character extends Component {
 
@@ -25,7 +26,8 @@ class Character extends Component {
             },
             showAddWeapon: false,
             wantToDelete: false,
-            editView: false
+            editView: false,
+            spellsReturn: { results: [] }
 
         }
     componentDidMount() {
@@ -56,22 +58,39 @@ class Character extends Component {
     toggleEditView = () => {
         this.setState({ editView: !this.state.editView })
     }
-    handleChange=(event)=>{
-        
-        const newInfo = { ...this.state.info}
+    handleChange = (event) => {
+
+        const newInfo = { ...this.state.info }
         console.log(newInfo)
         newInfo[event.target.name] = event.target.value
-        this.setState({info: newInfo })  
+        this.setState({ info: newInfo })
     }
-    submitEdited = (event) =>{
+    submitEdited = (event) => {
         event.preventDefault()
         const updatedInfo = this.state.info
         const CharacterId = this.props.match.params.characterId
         axios.put(`/api/p4/characters/${CharacterId}/`, updatedInfo)
-        .then(()=>{this.toggleEditView()})
+            .then(() => { this.toggleEditView() })
         // .then(()=>{ this.getSingleCharacter()})
     }
+    findSpell = () => {
+        axios.get('http://www.dnd5eapi.co/api/spells/')
+            // .then((res) => { console.log(res.data) })
+            .then((res) => { this.setState({ spellsReturn: res.data }) })
 
+    }
+    spellAdd = (url) => {
+        axios.get(url).then((res) => {
+            let returnedData = res.data
+            console.log(res.data)
+            const CharacterId = this.props.match.params.characterId
+            returnedData.characterId = CharacterId
+            axios.post('/api/p4/spells/', returnedData).then(console.log("DONE"))
+        })
+    }
+    doneWithSpells = () => {
+        this.setState({ spellsReturn: { results: [] } })
+    }
 
 
     render() {
@@ -79,32 +98,32 @@ class Character extends Component {
             <div>
                 <p>Im a single character </p>
                 <button onClick={this.toggleEditView}> Edit </button>
-                {this.state.editView ? 
-                
-                
-                <div>
-                <form onSubmit={this.submitEdited}>
-                
-                        Name: <input type="text" placeholder='Name' name='name' onChange={this.handleChange} defaultValue={this.state.info.name}/>
-                        Race: <input type="text" placeholder="Race" name='race' onChange={this.handleChange} defaultValue={this.state.info.race} />
-                        Class: <input type="text" placeholder="Class" name= 'characterClass' onChange={this.handleChange} defaultValue={this.state.info.characterClass} />
-                        Intelligence: <input type="text" placeholder="Intelligence" name='intelligence' onChange={this.handleChange} defaultValue={this.state.info.intelligence } />
-                        Dexterity: <input type="text" placeholder="Dexterity" name='dexterity'  onChange={this.handleChange} defaultValue={this.state.info.dexterity} />
-                        Strength: <input type="text" placeholder="Strength" name='strength' onChange={this.handleChange} defaultValue={this.state.info.strength} />
-                        Wisdom: <input type="text" placeholder='Wisdom' name='wisdom'  onChange={this.handleChange} defaultValue={this.state.info.wisdom} />
-                        Constitution <input type="text" placeholder="Constitution" name='constitution' onChange={this.handleChange} defaultValue={this.state.info.constitution} />
-                        Charisma: <input type="text" placeholder="Charisma" name='charisma' onChange={this.handleChange} defaultValue={this.state.info.charisma} />
-                        HP: <input type="text" placeholder='Hit Points' name='hitPoints' onChange={this.handleChange} defaultValue={this.state.info.hitPoints } />
-                        AC: <input type="text" placeholder='ac' name='ac' onChange={this.handleChange} defaultValue={this.state.info.ac} />
-                         
-                         <button>Submit Edited Character</button>
-                     </form>
-                     </div>
-                
-                
-                
-                
-                :
+                {this.state.editView ?
+
+
+                    <div>
+                        <form onSubmit={this.submitEdited}>
+
+                            Name: <input type="text" placeholder='Name' name='name' onChange={this.handleChange} defaultValue={this.state.info.name} />
+                            Race: <input type="text" placeholder="Race" name='race' onChange={this.handleChange} defaultValue={this.state.info.race} />
+                            Class: <input type="text" placeholder="Class" name='characterClass' onChange={this.handleChange} defaultValue={this.state.info.characterClass} />
+                            Intelligence: <input type="text" placeholder="Intelligence" name='intelligence' onChange={this.handleChange} defaultValue={this.state.info.intelligence} />
+                            Dexterity: <input type="text" placeholder="Dexterity" name='dexterity' onChange={this.handleChange} defaultValue={this.state.info.dexterity} />
+                            Strength: <input type="text" placeholder="Strength" name='strength' onChange={this.handleChange} defaultValue={this.state.info.strength} />
+                            Wisdom: <input type="text" placeholder='Wisdom' name='wisdom' onChange={this.handleChange} defaultValue={this.state.info.wisdom} />
+                            Constitution <input type="text" placeholder="Constitution" name='constitution' onChange={this.handleChange} defaultValue={this.state.info.constitution} />
+                            Charisma: <input type="text" placeholder="Charisma" name='charisma' onChange={this.handleChange} defaultValue={this.state.info.charisma} />
+                            HP: <input type="text" placeholder='Hit Points' name='hitPoints' onChange={this.handleChange} defaultValue={this.state.info.hitPoints} />
+                            AC: <input type="text" placeholder='ac' name='ac' onChange={this.handleChange} defaultValue={this.state.info.ac} />
+
+                            <button>Submit Edited Character</button>
+                        </form>
+                    </div>
+
+
+
+
+                    :
                     <div>
 
                         <button onClick={this.toggleDelete}>Delete this Character</button>
@@ -121,8 +140,21 @@ class Character extends Component {
                         <p>HP {this.state.info.hitPoints}</p>
                         <p>AC {this.state.info.ac}</p>
 
-                        <button onClick={this.toggleForm}>Add</button>
+                        <button onClick={this.toggleForm}>Add Weapon</button>
                         {this.state.showAddWeapon ? <NewWeaponForm toggleForm={this.toggleForm} characterId={this.state.info.characterId} /> : null}
+
+                        <div>
+                            <button onClick={this.findSpell}> Get spells</button>
+                            <button onClick={this.doneWithSpells}> Done with spells</button>
+                            {this.state.spellsReturn.results.map((spell, i) => (
+                                <div key={i}>
+                                    {/* <button onClick={this.spellAdd(`${spell.name}`) }  > (+)</button>{spell.name} */}
+                                    <Spell spellName={spell.name} spellAdd={this.spellAdd} url={spell.url} />
+                                </div>
+                            ))}
+                        </div>
+
+
                         {this.state.info.weapons.map((weapon, i) =>
 
                             (<div key={i}>
