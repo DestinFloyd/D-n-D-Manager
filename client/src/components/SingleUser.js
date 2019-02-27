@@ -57,8 +57,7 @@ class SingleUser extends Component {
                 {this.state.info.characters.map((char, i) => (
 
                     <div key={i}>
-                        <div>
-                           
+                        <div>       
                             <Link to={`/my/${this.props.userId}/character/${char.characterId}`}>
                                 <div>{char.name}</div>
                             </Link>

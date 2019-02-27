@@ -38,4 +38,19 @@ class Weapon(models.Model):
     def __str__(self):
         return self.name
 
+class Spell(models.Model):
+        spellId = models.AutoField(primary_key=True)
+        name = models.CharField(max_length=50)
+        desc = models.TextField()
+        higher_level = models.TextField()
+        range = models.CharField(max_length=240)
+        ritual = models.CharField(max_length=15)
+        duration = models.CharField(max_length=50)
+        concentration = models.CharField(max_length=50)
+        casting_time = models.CharField(max_length=255)
+        characterId = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="spells")
+        
+        def __str__(self):
+            return self.name
+
     

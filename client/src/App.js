@@ -28,13 +28,16 @@ class App extends Component {
     })
   }
 
-
+  findSpell = () => {
+    axios.get('http://www.dnd5eapi.co/api/spells/1')
+      .then((res) => { console.log(res.data) })
+  }
 
 
   render() {
     const userComponent = () => { return <User users={this.state.responseStuff} getAll={this.onCheck} /> }
-    const singleUserComponet = ({match , history}) => { return <SingleUser getAll={this.onCheck} userId={match.params.userId} home={history.goBack}/> }
-    
+    const singleUserComponet = ({ match, history }) => { return <SingleUser getAll={this.onCheck} userId={match.params.userId} home={history.goBack} /> }
+
     return (
 
 
@@ -42,15 +45,16 @@ class App extends Component {
         <div>
           <div>
             <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
-<Dice/>
+            <button onClick={this.findSpell}> Get spells</button>
+            <Dice />
           </div >
           <Switch>
 
-            <Route exact path='/' render={userComponent}/>
+            <Route exact path='/' render={userComponent} />
 
-            {/* <Route exact path='/player/:userId/' render={()=> <SingleUser getAll={this.onCheck}/> } />   */}
-                <Route exact path='/player/:userId' render={singleUserComponet} />
-            {/* <Route exact path='/player/:userId/' component={SingleUser} /> */}
+            
+            <Route exact path='/player/:userId' render={singleUserComponet} />
+            
 
             <Route exact path='/my/:userId/character/:characterId/' component={Character} />
           </Switch>

@@ -2,6 +2,12 @@ from rest_framework import serializers
 from .models import Weapon
 from .models import Character
 from .models import User
+from .models import Spell
+
+class SpellSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Spell
+        fields = ('spellId', 'name', 'desc', 'higher_level', 'range', 'ritual', 'duration', 'concentration', 'casting_time', 'characterId')
 
 
 class WeaponSerializer(serializers.ModelSerializer):

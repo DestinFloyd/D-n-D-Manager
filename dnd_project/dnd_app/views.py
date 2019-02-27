@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from .models import Weapon
 from .models import User
 from .models import Character
+from .models import Spell
 from .serializer import *
 # Create your views here.
 
@@ -22,4 +23,9 @@ class CharacterView(viewsets.ModelViewSet):
 class WeaponView(viewsets.ModelViewSet):
     queryset = Weapon.objects.all()
     serializer_class = WeaponSerializer
+
+class SpellView(viewsets.ModelViewSet):
+    queryset = Spell.objects.all()
+    serializer_class = SpellSerializer
+
 
