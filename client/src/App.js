@@ -15,7 +15,7 @@ class App extends Component {
       style: '',
       characters: [{}]
     }], 
-    spellsReturn: [{}]
+    spellsReturn: {results:[]}
 
   }
   componentDidMount() {
@@ -48,7 +48,15 @@ class App extends Component {
         <div>
           <div>
             <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
-            <button onClick={this.findSpell}> Get spells</button>
+            <div> 
+              <button onClick={this.findSpell}> Get spells</button>
+            
+            {this.state.spellsReturn.results.map((spell, i)=>(
+              <div key={i}>
+                {spell.name}
+              </div>
+            ))}
+            </div>
             <Dice />
           </div >
           <Switch>

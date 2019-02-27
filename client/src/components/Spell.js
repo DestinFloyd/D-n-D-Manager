@@ -4,7 +4,7 @@ class Spell extends Component {
     render() {
         return (
             <div>
-                Spell!
+                spell.
             </div>
         );
     }
