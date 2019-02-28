@@ -9,8 +9,6 @@ from .models import Spell
 from .serializer import *
 # Create your views here.
 
-def helloIndex(req):
-    return HttpResponse("ello!")  
 
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
