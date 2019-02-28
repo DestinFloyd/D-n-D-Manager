@@ -21,11 +21,10 @@ class Weapon extends Component {
     render() {
         return (
             <div>
-               
                 Weapon: {this.props.name}
                 Damage: {this.props.damage}
-                Damage Details: {this.props.damageDetails}
-                Special Affects:{this.props.specialAffects} 
+                Damage Details: {this.props.damageDetails }
+                Special Affects:{this.props.specialAffects } 
                 <MyButton onClick={this.deleteWeapon}>Drop</MyButton>
             </div>
         );

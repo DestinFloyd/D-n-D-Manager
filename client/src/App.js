@@ -26,7 +26,14 @@ background-repeat: no-repeat;
       box-shadow: 2px 2px 2px 2px red;
 }
 `
-
+const Header = styled.div`
+display: flex;
+text-align: center;
+font-size: 3em;
+`
+const HeaderName = styled.div`
+justify-content: center;
+`
 
 class App extends Component {
   state = {
@@ -63,8 +70,10 @@ class App extends Component {
       <Router>
         <div>
           <div>
+            <Header> 
             <Link to={'/'}> <Home onClick={this.onCheck}> </Home></Link>
-            
+            <HeaderName> Dungeons + Dragons </HeaderName>
+            </Header>
         
             <Dice />
           </div >
