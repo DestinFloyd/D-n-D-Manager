@@ -3,6 +3,7 @@ import axios from 'axios'
 import NewWeaponForm from './NewWeaponForm'
 import Weapon from './Weapon'
 import Spell from './Spell';
+import Spell2 from './Spell2';
 
 class Character extends Component {
 
@@ -22,7 +23,8 @@ class Character extends Component {
                 charisma: '',
                 hitPoints: '',
                 ac: '',
-                weapons: []
+                weapons: [],
+                spells: []
             },
             showAddWeapon: false,
             wantToDelete: false,
@@ -79,12 +81,21 @@ class Character extends Component {
             .then((res) => { this.setState({ spellsReturn: res.data }) })
 
     }
+    // modifiers = (idOne, idTwo) => {
+    //     console.log(idOne)
+    //     if (document.getElementById(idOne).innerHTML >= 18) {
+    //         document.getElementById(idTwo).innerHTML = "+3"
+    //     }
+    // }
     spellAdd = (url) => {
         axios.get(url).then((res) => {
             let returnedData = res.data
             console.log(res.data)
             const CharacterId = this.props.match.params.characterId
             returnedData.characterId = CharacterId
+            // console.log(returnedData.desc[0])
+            returnedData.desc = returnedData.desc[0]
+            // returnedData.higher_level =  returnedData.higher_level[0]
             axios.post('/api/p4/spells/', returnedData).then(console.log("DONE"))
         })
     }
@@ -125,13 +136,13 @@ class Character extends Component {
 
                     :
                     <div>
-
+                        {/* <button onClick={this.modifiers("name", "nameMod")}> check Mods</button> */}
                         <button onClick={this.toggleDelete}>Delete this Character</button>
                         {this.state.wantToDelete ? <button onClick={this.deleteCharacter}>DELETE THIS CHARACTER?</button> : null}
-                        <p>Name: {this.state.info.name}</p>
+                        <p> {this.state.info.name}</p>
                         <p>Race: {this.state.info.race}</p>
                         <p>Class: {this.state.info.characterClass}</p>
-                        <p>INT {this.state.info.intelligence}</p>
+                        INT <p id="name">{this.state.info.intelligence}</p> <p id='nameMod'> </p>
                         <p>DEX {this.state.info.dexterity}</p>
                         <p>STR {this.state.info.strength}</p>
                         <p>WIS {this.state.info.wisdom}</p>
@@ -142,16 +153,25 @@ class Character extends Component {
 
                         <button onClick={this.toggleForm}>Add Weapon</button>
                         {this.state.showAddWeapon ? <NewWeaponForm toggleForm={this.toggleForm} characterId={this.state.info.characterId} /> : null}
+                        <div>
+                            {this.state.info.spells.map((spell, i) => (
+                                <div key={i}>
+                                    <Spell2 spell={spell} />
+                                </div>
+                            ))}
+                            <button onClick={this.doneWithSpells}> Done with spells</button>
+                        </div>
 
                         <div>
                             <button onClick={this.findSpell}> Get spells</button>
                             <button onClick={this.doneWithSpells}> Done with spells</button>
                             {this.state.spellsReturn.results.map((spell, i) => (
                                 <div key={i}>
-                                    {/* <button onClick={this.spellAdd(`${spell.name}`) }  > (+)</button>{spell.name} */}
+
                                     <Spell spellName={spell.name} spellAdd={this.spellAdd} url={spell.url} />
                                 </div>
                             ))}
+                            <button onClick={this.doneWithSpells}> Done with spells</button>
                         </div>
 
 

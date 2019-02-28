@@ -42,7 +42,7 @@ class Spell(models.Model):
         spellId = models.AutoField(primary_key=True)
         name = models.CharField(max_length=50)
         desc = models.TextField()
-        higher_level = models.TextField()
+        # higher_level = models.TextField(null=True, blank=True)
         range = models.CharField(max_length=240)
         ritual = models.CharField(max_length=15)
         duration = models.CharField(max_length=50)
