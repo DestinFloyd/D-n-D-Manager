@@ -1,4 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
+import D4Background from './images/d4Background.png'
+
+const Holder4 = styled.div`
+background-image: url(${D4Background});
+background-size:contain;
+height: 40px; 
+width: 40px;
+display: flex; 
+justify-content: center;
+align-items: center;
+`
 
 class D4 extends Component {
     state = {
@@ -17,9 +29,9 @@ class D4 extends Component {
 
     render() {
         return (
-            <div>
+            <Holder4>
                 {this.state.result}
-            </div>
+            </Holder4>
         );
     }
 }

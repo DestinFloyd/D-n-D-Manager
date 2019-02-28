@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import styled from 'styled-components'
+
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
 
 class NewUserForm extends Component {
     state = {
@@ -29,8 +38,7 @@ class NewUserForm extends Component {
 
     render() {
         return (
-            <div>
-                Im a form           
+            <div>          
                 <form onSubmit={this.handleSubmit}>
                 <div>
                     <input type="text"
@@ -40,7 +48,7 @@ class NewUserForm extends Component {
                     />
 
                 </div>
-                <button>Submit New User</button>
+                <MyButton>Submit New User</MyButton>
             </form>
 
             </div>

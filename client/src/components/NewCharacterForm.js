@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components'
+
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
 
 class NewCharacterForm extends Component {
     state =
@@ -60,7 +69,7 @@ class NewCharacterForm extends Component {
                 <input type="text" placeholder='Hit Points' name='hitPoints' onChange={this.handleChange} />
                 <input type="text" placeholder='ac' name='ac' onChange={this.handleChange} />
                 
-                <button>Submit New Character</button>
+                <MyButton>Submit New Character</MyButton>
             </form>
             </div>
         );

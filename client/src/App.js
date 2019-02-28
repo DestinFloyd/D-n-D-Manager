@@ -6,6 +6,27 @@ import User from './components/User';
 import SingleUser from './components/SingleUser';
 import Character from './components/Character'
 import Dice from './components/Dice';
+import styled from 'styled-components'
+import dndSymbol from './images/dndSymbol.png'
+
+
+
+const Home = styled.div`
+width: 10vw;
+height: 10vh;
+text-align: center;
+display:flex; 
+justify-content: center;
+background-image: url(${dndSymbol});
+background-position: center;
+background-size: contain;
+background-repeat: no-repeat;
+&:hover {
+   
+      box-shadow: 2px 2px 2px 2px red;
+}
+`
+
 
 class App extends Component {
   state = {
@@ -42,7 +63,8 @@ class App extends Component {
       <Router>
         <div>
           <div>
-            <Link to={'/'}> <button onClick={this.onCheck}> Home</button></Link>
+            <Link to={'/'}> <Home onClick={this.onCheck}> </Home></Link>
+            
         
             <Dice />
           </div >

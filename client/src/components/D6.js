@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
+import D6Background from './images/d6Background.png'
 
+const Holder6 = styled.div`
+background-image: url(${D6Background});
+background-size:contain;
+height: 40px; 
+width: 40px;
+display: flex; 
+justify-content: center;
+align-items: center;
+`
 class D6 extends Component {
     state = {
         result: '',
@@ -17,9 +28,9 @@ class D6 extends Component {
 
     render() {
         return (
-            <div>
+            <Holder6>
                 {this.state.result}
-            </div>
+            </Holder6>
         );
     }
 }

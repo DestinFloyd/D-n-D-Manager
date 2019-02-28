@@ -4,6 +4,60 @@ import NewWeaponForm from './NewWeaponForm'
 import Weapon from './Weapon'
 import Spell from './Spell';
 import Spell2 from './Spell2';
+import styled from 'styled-components'
+import parchmentPaper from './images/parchment-paper2.gif'
+
+const SingleCharacter = styled.div`
+background-image: url(${parchmentPaper});
+display: flex; 
+justify-content: center;
+align-items: center;
+min-width: 40vw;
+background-position-x: center;
+background-repeat: no-repeat;
+overflow: hidden;
+text-align: center;
+`
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
+const DeleteButton = styled.button`
+border-radius: 20%;
+background-color: red;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
+const Container = styled.div`
+display: flex; 
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-evenly;
+width: 350px;
+`
+const SingleName = styled.div`
+font-size: 4em;
+margin-block-end: 0px;
+`
+const Stats = styled.div`
+border: solid black;
+height: 125px;
+width: 125px;
+font-size: 2em;
+`
+const OtherStat = styled.div`
+height: 125px;
+width: 125px;
+font-size: 2em;
+`
+const RaceClass = styled.div`
+font-size: 2em;
+
+`
 
 class Character extends Component {
 
@@ -73,11 +127,10 @@ class Character extends Component {
         const CharacterId = this.props.match.params.characterId
         axios.put(`/api/p4/characters/${CharacterId}/`, updatedInfo)
             .then(() => { this.toggleEditView() })
-        // .then(()=>{ this.getSingleCharacter()})
+        
     }
     findSpell = () => {
         axios.get('http://www.dnd5eapi.co/api/spells/')
-            // .then((res) => { console.log(res.data) })
             .then((res) => { this.setState({ spellsReturn: res.data }) })
 
     }
@@ -93,9 +146,7 @@ class Character extends Component {
             console.log(res.data)
             const CharacterId = this.props.match.params.characterId
             returnedData.characterId = CharacterId
-            // console.log(returnedData.desc[0])
             returnedData.desc = returnedData.desc[0]
-            // returnedData.higher_level =  returnedData.higher_level[0]
             axios.post('/api/p4/spells/', returnedData).then(console.log("DONE"))
         })
     }
@@ -106,16 +157,16 @@ class Character extends Component {
 
     render() {
         return (
-            <div>
-                <p>Im a single character </p>
-                <button onClick={this.toggleEditView}> Edit </button>
+            <SingleCharacter>
+                
+                <MyButton onClick={this.toggleEditView}> Edit </MyButton>
                 {this.state.editView ?
 
 
                     <div>
                         <form onSubmit={this.submitEdited}>
 
-                            Name: <input type="text" placeholder='Name' name='name' onChange={this.handleChange} defaultValue={this.state.info.name} />
+                           <SingleName> Name: <input type="text" placeholder='Name' name='name' onChange={this.handleChange} defaultValue={this.state.info.name} /></SingleName>
                             Race: <input type="text" placeholder="Race" name='race' onChange={this.handleChange} defaultValue={this.state.info.race} />
                             Class: <input type="text" placeholder="Class" name='characterClass' onChange={this.handleChange} defaultValue={this.state.info.characterClass} />
                             Intelligence: <input type="text" placeholder="Intelligence" name='intelligence' onChange={this.handleChange} defaultValue={this.state.info.intelligence} />
@@ -127,7 +178,7 @@ class Character extends Component {
                             HP: <input type="text" placeholder='Hit Points' name='hitPoints' onChange={this.handleChange} defaultValue={this.state.info.hitPoints} />
                             AC: <input type="text" placeholder='ac' name='ac' onChange={this.handleChange} defaultValue={this.state.info.ac} />
 
-                            <button>Submit Edited Character</button>
+                            <MyButton>Submit Edited Character</MyButton>
                         </form>
                     </div>
 
@@ -137,41 +188,46 @@ class Character extends Component {
                     :
                     <div>
                         {/* <button onClick={this.modifiers("name", "nameMod")}> check Mods</button> */}
-                        <button onClick={this.toggleDelete}>Delete this Character</button>
+                        <DeleteButton onClick={this.toggleDelete}>Delete this Character</DeleteButton>
                         {this.state.wantToDelete ? <button onClick={this.deleteCharacter}>DELETE THIS CHARACTER?</button> : null}
-                        <p> {this.state.info.name}</p>
-                        <p>Race: {this.state.info.race}</p>
-                        <p>Class: {this.state.info.characterClass}</p>
-                        INT <p id="name">{this.state.info.intelligence}</p> <p id='nameMod'> </p>
-                        <p>DEX {this.state.info.dexterity}</p>
-                        <p>STR {this.state.info.strength}</p>
-                        <p>WIS {this.state.info.wisdom}</p>
-                        <p>CON {this.state.info.constitution}</p>
-                        <p>CHA {this.state.info.charisma}</p>
-                        <p>HP {this.state.info.hitPoints}</p>
-                        <p>AC {this.state.info.ac}</p>
+                        <SingleName>  <p> {this.state.info.name}</p></SingleName>
+                        
+                        <br/>
+                        
+                        <RaceClass>{this.state.info.characterClass} {this.state.info.race} </RaceClass>
+                        {/* INT <p id="naStatsme">{this.state.info.intelligence}</p> <p id='nameMod'> </p> */}
+                        <Container> 
+                        <Stats>INT{this.state.info.intelligence}</Stats>
+                        <Stats>DEX {this.state.info.dexterity}</Stats>
+                        <Stats>STR {this.state.info.strength}</Stats>
+                        <Stats>WIS {this.state.info.wisdom}</Stats>
+                        <Stats>CON {this.state.info.constitution}</Stats>
+                        <Stats>CHA {this.state.info.charisma}</Stats>
+                        <OtherStat>HP {this.state.info.hitPoints}</OtherStat>
+                        <OtherStat>AC {this.state.info.ac}</OtherStat>
+                        </Container>
 
-                        <button onClick={this.toggleForm}>Add Weapon</button>
+                        <MyButton onClick={this.toggleForm}>Add Weapon</MyButton>
                         {this.state.showAddWeapon ? <NewWeaponForm toggleForm={this.toggleForm} characterId={this.state.info.characterId} /> : null}
                         <div>
                             {this.state.info.spells.map((spell, i) => (
                                 <div key={i}>
-                                    <Spell2 spell={spell} />
+                                    <Spell2 spell={spell}/>
                                 </div>
                             ))}
-                            <button onClick={this.doneWithSpells}> Done with spells</button>
+                            
                         </div>
 
                         <div>
-                            <button onClick={this.findSpell}> Get spells</button>
-                            <button onClick={this.doneWithSpells}> Done with spells</button>
+                            <MyButton onClick={this.findSpell}> Get spells</MyButton>
+                            <MyButton onClick={this.doneWithSpells}> Done with spells</MyButton>
                             {this.state.spellsReturn.results.map((spell, i) => (
                                 <div key={i}>
 
                                     <Spell spellName={spell.name} spellAdd={this.spellAdd} url={spell.url} />
                                 </div>
                             ))}
-                            <button onClick={this.doneWithSpells}> Done with spells</button>
+                           
                         </div>
 
 
@@ -193,7 +249,7 @@ class Character extends Component {
 
                 }
 
-            </div>
+            </SingleCharacter>
         );
     }
 }

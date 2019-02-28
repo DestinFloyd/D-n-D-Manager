@@ -2,6 +2,26 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import NewCharacterForm from './NewCharacterForm'
+import styled from 'styled-components'
+
+const DeleteButton = styled.button`
+border-radius: 20%;
+background-color: red;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
+const NameOfCharacter = styled.div`
+font-size: 4em;
+color: black;
+`
 
 class SingleUser extends Component {
 
@@ -48,27 +68,27 @@ class SingleUser extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.toggleDelete}>Delete this user</button>
-                {this.state.wantToDelete ?<button onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</button> : null}
-                <button onClick={this.toggleNewCharacter}>New Character</button>
+                
+                <MyButton onClick={this.toggleNewCharacter}>New Character</MyButton>
                 {this.state.newCharacterForm ? <NewCharacterForm toggleNewCharacter={this.toggleNewCharacter} userId={this.props.userId} getSingleUser={this.getSingleUser}/> : null}
-                <p>  Im a single users :)  </p>
+                
                 
                 {this.state.info.characters.map((char, i) => (
 
                     <div key={i}>
                         <div>       
                             <Link to={`/my/${this.props.userId}/character/${char.characterId}`}>
-                                <div>{char.name}</div>
+                                <NameOfCharacter>{char.name}</NameOfCharacter>
                             </Link>
                         </div>
                     </div>
 
                 ))}
 
+<br/>
 
-
-
+<DeleteButton onClick={this.toggleDelete}>Delete this user </ DeleteButton>
+                {this.state.wantToDelete ?<DeleteButton onClick={this.deleteUser}>DELETE THIS USER AND CHARACTERS</DeleteButton> : null}
             </div>
         );
     }

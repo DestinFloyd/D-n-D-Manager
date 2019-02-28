@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import styled from 'styled-components'
+
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
 class NewWeaponForm extends Component {
     state = {
         newWeapon:{ 
@@ -57,7 +66,7 @@ class NewWeaponForm extends Component {
                         />
    
                     </div>
-                    <button>Submit New Weapon</button>
+                    <MyButton>Submit New Weapon</MyButton>
                 </form>
             </div>
         );

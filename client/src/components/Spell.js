@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
+import styled from 'styled-components'
 
+const MyOtherButton = styled.button`
+border-radius: 20%;
+background-color: silver;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
 class Spell extends Component {
 
 addSpell=()=>{
@@ -10,7 +18,7 @@ addSpell=()=>{
         return (
             <div>
                {/* <button onClick={this.spellAdd(`${spell.name}`) }  > (+)</button> */}
-              <button onClick={this.addSpell}> Add! </button>{this.props.spellName}
+              <MyOtherButton onClick={this.addSpell}> Add! </MyOtherButton>{this.props.spellName}
             </div>
         );
     }

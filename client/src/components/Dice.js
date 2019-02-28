@@ -6,7 +6,27 @@ import D00 from './D00'
 import D8 from './D8';
 import D6 from './D6';
 import D4 from './D4';
+import styled from 'styled-components'
 
+const BagBox = styled.div`
+width: 100vw;
+
+`
+const Bag = styled.div`
+display: flex;
+
+`
+const Bag2 = styled.div`
+display: flex;
+flex-wrap: wrap;
+`
+const HoldingDice = styled.div`
+padding: 10px;
+`
+const HoldingResults = styled.div`
+padding: 10px;
+
+`
 
 class Dice extends Component {
     state = {
@@ -24,6 +44,13 @@ class Dice extends Component {
         let itNow = { ...this.state.dice }
         itNow = empty
         this.setState({ dice: itNow })
+
+    }
+    emptyBag = () => {
+        const empty = ['']
+        let itNow = { ...this.state.set }
+        itNow = empty
+        this.setState({ set: itNow })
 
     }
     loopNGo = () => {
@@ -58,8 +85,8 @@ class Dice extends Component {
     render() {
 
         return (
-            <div>
-                Im the dice Component
+            <BagBox>
+
                 <button onClick={() => { this.addToSet(20) }} > Add 20</button>
                 <button onClick={() => { this.addToSet("00") }}>Add 00</button>
                 <button onClick={() => { this.addToSet(12) }}>Add 12</button>
@@ -68,31 +95,35 @@ class Dice extends Component {
                 <button onClick={() => { this.addToSet(6) }}>Add 6</button>
                 <button onClick={() => { this.addToSet(4) }}>Add 4</button>
                 <button onClick={this.loopNGo}> ReRoll </button>
-                <button onClick={this.eraseSet}> Erase</button>
-                <br/>
-Your bag has: 
+                <button onClick={this.emptyBag}>Empty Bag</button>
+                <button onClick={this.eraseSet}> Erase Rolls</button>
+                <br />
+
+                <Bag>
+                    Your bag has:
                 {this.state.set.map((die, i) => (
 
-                    <div key={i}>
-                        <div>
-                           
-        {die}
-                        </div>
-                    </div>
+                        <HoldingDice key={i}>
+                            <div>
 
-                ))}
+                                {die}
+                            </div>
+                        </HoldingDice>
 
+                    ))}
+                </Bag>
+<Bag2>
                 {this.state.dice.map((die, i) => (
-                    <div key={i}>
+                    <HoldingResults key={i}>
                         <div>
                             {die}
                         </div>
-                    </div>
+                    </HoldingResults>
 
                 ))}
 
-
-            </div>
+</Bag2>
+            </BagBox>
         );
     }
 }

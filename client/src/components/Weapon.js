@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components'
+
+const MyButton = styled.button`
+border-radius: 20%;
+background-color: black;
+color: white;
+font-weight: bold;
+padding: 1%;
+`
 
 class Weapon extends Component {
     deleteWeapon=()=>{
@@ -17,7 +26,7 @@ class Weapon extends Component {
                 Damage: {this.props.damage}
                 Damage Details: {this.props.damageDetails}
                 Special Affects:{this.props.specialAffects} 
-                <button onClick={this.deleteWeapon}>Drop</button>
+                <MyButton onClick={this.deleteWeapon}>Drop</MyButton>
             </div>
         );
     }
