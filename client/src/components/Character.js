@@ -130,7 +130,7 @@ class Character extends Component {
         
     }
     findSpell = () => {
-        axios.get('http://www.dnd5eapi.co/api/spells/')
+        axios.get('/www.dnd5eapi.co/api/spells/')
             .then((res) => { this.setState({ spellsReturn: res.data }) })
 
     }
@@ -189,7 +189,7 @@ class Character extends Component {
                     <div>
                         {/* <button onClick={this.modifiers("name", "nameMod")}> check Mods</button> */}
                         <DeleteButton onClick={this.toggleDelete}>Delete this Character</DeleteButton>
-                        {this.state.wantToDelete ? <button onClick={this.deleteCharacter}>DELETE THIS CHARACTER?</button> : null}
+                        {this.state.wantToDelete ? <DeleteButton onClick={this.deleteCharacter}>DELETE THIS CHARACTER ? </DeleteButton> : null}
                         <SingleName>  <p> {this.state.info.name}</p></SingleName>
                         
                         <br/>
