@@ -130,7 +130,7 @@ class Character extends Component {
         
     }
     findSpell = () => {
-        axios.get('/www.dnd5eapi.co/api/spells/')
+        axios.get('www.dnd5eapi.co/api/spells/')
             .then((res) => { this.setState({ spellsReturn: res.data }) })
 
     }
